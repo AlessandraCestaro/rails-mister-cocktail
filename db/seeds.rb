@@ -1,6 +1,8 @@
 require 'json'
 require 'open-uri'
 
+Cocktail.destroy_all
+
 hash_cocktails = {}
 
 url_cocktails  = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
@@ -33,14 +35,16 @@ array_cocktails.each do |cocktail|
     hash_cocktails[cocktail] << detail["strDrinkThumb"]
   end
 
-  # hash_cocktails.each do |key, value|
-  #   Cocktail.create(name: key, pic: value[2])
-  # end
-
-  # p Cocktail.first
-
 end
 
+hash_cocktails.each do |key, value|
+    c = Cocktail.new(name: key, image: value[2])
+    # p c
+    c.save
+    i = Ingredient.new(name: value[0])
+    # p i
+    i.save
+  end
 # url_ingredients = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
 # url_cocktails = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail'
 
@@ -73,6 +77,6 @@ end
 
 DOSES = %w(200ml 300ml 2spoon ciao aCupOf)
 
-50.times do
+100.times do
   Dose.create(cocktail: Cocktail.all.sample, ingredient: Ingredient.all.sample, description: DOSES.sample)
 end

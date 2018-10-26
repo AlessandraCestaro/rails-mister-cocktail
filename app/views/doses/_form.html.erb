@@ -1,7 +1,4 @@
-<h1>Add a new dose for your cocktail</h1>
-
-
-<%= simple_form_for [@cocktail, @dose] do |f| %>
+<%= simple_form_for(@dose) do |f| %>
   <% if @dose.errors.any? %>
     <div class="errors-container">
       <ul>
@@ -15,9 +12,8 @@
     <div class="form-group">
       <%= f.label :description %>
       <%= f.text_field :description, class: 'form-control' %>
-      <%= f.association :ingredient %>
+
     </div>
   <!-- [...] all the fields -->
       <%= f.submit class: 'btn-btn-primary' %>
 <% end %>
-
